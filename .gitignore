@@ -1,0 +1,20 @@
+# Virtual Environment
+venv/
+env/
+.env/
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# System files
+.DS_Store
+.DS_Store?
+._*
+.Trashes
+
+# Project specific
+transcript.txt
+whisper.cpp/
