@@ -75,6 +75,53 @@ A sophisticated audio summarization tool that leverages OpenAI's Whisper (via wh
    - Set correct path for FFmpeg
    - Update Whisper model directory path
    - Configure Ollama server URL if different
+  
+## Workflow Diagram
+  +---------------------------------------------------+
+|                    User Interaction               |
+| 1. Upload Audio File (MP3, WAV, etc.)             |
+| 2. Select Audio Type, Whisper Model, LLM Model    |
+| 3. Provide Optional Context                       |
++---------------------------------------------------+
+                          ↓
++---------------------------------------------------+
+|               Audio Preprocessing                 |
+| 1. Convert Audio to WAV (16kHz, Mono) using FFmpeg|
+| 2. Save Preprocessed Audio Temporarily            |
++---------------------------------------------------+
+                          ↓
++---------------------------------------------------+
+|               Whisper AI Transcription             |
+| 1. Load Whisper Model (e.g., base, small, large)  |
+| 2. Transcribe Audio to Text                       |
+| 3. Save Transcript to a Text File                 |
++---------------------------------------------------+
+                          ↓
++---------------------------------------------------+
+|               Transcript Formatting               |
+| 1. Remove Timestamps (if any)                     |
+| 2. Clean and Format Text for Readability          |
+| 3. Save Formatted Transcript                      |
++---------------------------------------------------+
+                          ↓
++---------------------------------------------------+
+|               Ollama LLM Summarization            |
+| 1. Load LLM Model (e.g., LLaMA, GPT-J)            |
+| 2. Generate Summary Using Predefined Prompt       |
+| 3. Stream Summary Back to Application             |
++---------------------------------------------------+
+                          ↓
++---------------------------------------------------+
+|               Display Results                     |
+| 1. Show Summary in Streamlit UI                   |
+| 2. Provide Downloadable Transcript File           |
++---------------------------------------------------+
+                          ↓
++---------------------------------------------------+
+|               Cleanup Temporary Files             |
+| 1. Delete Preprocessed Audio File                 |
+| 2. Delete Raw Transcript File                     |
++---------------------------------------------------+
 
 ## 🚀 Usage
 
