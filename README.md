@@ -77,7 +77,8 @@ A sophisticated audio summarization tool that leverages OpenAI's Whisper (via wh
    - Configure Ollama server URL if different
   
 ## Workflow Diagram
-![image](https://github.com/user-attachments/assets/c80e8a96-8af9-4274-b437-05fa71dc1f02)
+
+<img src="https://github-production-user-asset-6210df.s3.amazonaws.com/78475119/413510326-c80e8a96-8af9-4274-b437-05fa71dc1f02.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20250215%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250215T035000Z&X-Amz-Expires=300&X-Amz-Signature=7cb4a2a17d30d58065450b73cd1eb2d7bd1f1a856f2c4898f1a14bb7a7c72dae&X-Amz-SignedHeaders=host" alt="Description" width="600"/>
 
 
 ## 🚀 Usage
