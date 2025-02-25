@@ -7,7 +7,7 @@ import tempfile
 
 # Constants
 OLLAMA_SERVER_URL = "http://localhost:11434"  # Replace this with your actual Ollama server URL if different
-WHISPER_MODEL_DIR = "D:/MALAV/America/LLms/AI-Powered-Meeting-Summarizer-main/whisper.cpp/models"  # Directory where whisper models are stored
+WHISPER_MODEL_DIR = "D:/MALAV/America/LLms/AI-Powered-Audio-Summarizer-main/whisper.cpp/models"  # Directory where whisper models are stored
 
 # Prompts for different audio types
 prompts = {
@@ -84,6 +84,183 @@ prompts = {
     7. Key takeaways or recommendations for the audience."""
 }
 
+# prompts = {
+#     "Meeting Recording": """You are given a transcript from a meeting. Please provide a detailed and structured summary of the discussion. Include only the points that are explicitly mentioned in the transcript. If a point is not mentioned, do not include it in the summary. The possible points to include are:
+#     1. **Main Topic**: Identify the primary subject or agenda of the meeting.
+#     2. **Key Points**: Summarize the main points discussed, including any data, facts, or figures mentioned.
+#     3. **Decisions Made**: Highlight any decisions or resolutions reached during the meeting.
+#     4. **Action Items**: List specific tasks, responsibilities, or next steps assigned to participants.
+#     5. **Tone and Dynamics**: Describe the tone of the discussion (e.g., formal, casual, tense) and the level of participant engagement.
+#     6. **Challenges or Disagreements**: Note any conflicts, disagreements, or challenges raised during the meeting.
+#     7. **Follow-Up**: Mention any deadlines, follow-up meetings, or pending actions.
+#     8. **Additional Insights**: Provide any other relevant observations or insights from the discussion.
+
+#     **Instructions**:
+#     - Only include points that are explicitly mentioned in the transcript.
+#     - If a point is not mentioned, skip it entirely.
+#     - Do not make up or assume any information.
+
+#     **Transcript**:
+#     {text}
+
+#     **Summary**:
+#     """,
+
+#     "Song": """You are given a transcript from a song. Please provide a detailed and insightful summary. Include only the points that are explicitly mentioned in the transcript. If a point is not mentioned or not applicable, do not include it in the summary. The possible points to include are:
+#     1. **Lyrics Analysis**:
+#        - Identify the main theme or message of the song.
+#        - Describe the emotional tone and mood (e.g., happy, sad, romantic, angry).
+#     2. **Song and Artist Identification**:
+#        - Based on the lyrics, make an educated guess about the likely song title and singer/artist. If the song title or artist is not explicitly mentioned, skip this point entirely.
+#     3. **Notable Lyrics**:
+#        - Highlight significant or memorable lines and explain their meaning and significance.
+#     4. **Musical Style and Genre**:
+#        - Infer the musical style, genre, or instrumentation based on the lyrics (e.g., rock, pop, hip-hop).
+#     5. **Cultural or Historical Context**:
+#        - Provide any relevant cultural, historical, or social context that enhances the understanding of the song. If no context is mentioned, skip this point entirely.
+#     6. **Overall Impact**:
+#        - Summarize the overall message or impact of the song and how it might resonate with listeners.
+#     7. **Similar Songs or Artists**:
+#        - Suggest similar songs or artists based on the style and theme of the lyrics. If no similar songs or artists are mentioned, skip this point entirely.
+
+#     **Instructions**:
+#     - Only include points that are explicitly mentioned or can be inferred from the transcript.
+#     - If a point is not mentioned or not applicable, skip it entirely.
+#     - Do not include phrases like "Not applicable" or "No information available" in the summary.
+#     - Ensure the summary is concise and only includes relevant information.
+
+#     **Transcript**:
+#     {text}
+
+#     **Summary**:
+#     """,
+
+#     "Lecture": """You are given a transcript from an educational lecture. Please provide a detailed and structured summary. Include only the points that are explicitly mentioned in the transcript. If a point is not mentioned, do not include it in the summary. The possible points to include are:
+#     1. **Main Subject**: Identify the primary topic or subject of the lecture.
+#     2. **Key Concepts**: Summarize the main ideas, theories, or principles discussed.
+#     3. **Examples and Illustrations**: Highlight any examples, case studies, or practical applications mentioned.
+#     4. **Key Takeaways**: List the most important points or lessons from the lecture.
+#     5. **Assignments or Readings**: Mention any assignments, exercises, or recommended readings.
+#     6. **Tone and Style**: Describe the lecturer's tone and teaching style (e.g., engaging, formal, interactive).
+#     7. **Questions and Answers**: Summarize any questions asked by students and the lecturer's responses.
+#     8. **Additional Insights**: Provide any other relevant observations or insights from the lecture.
+
+#     **Instructions**:
+#     - Only include points that are explicitly mentioned in the transcript.
+#     - If a point is not mentioned, skip it entirely.
+#     - Do not make up or assume any information.
+
+#     **Transcript**:
+#     {text}
+
+#     **Summary**:
+#     """,
+
+#     "Podcast": """You are given a transcript from a podcast episode. Please provide a detailed and engaging summary. Include only the points that are explicitly mentioned in the transcript. If a point is not mentioned, do not include it in the summary. The possible points to include are:
+#     1. **Main Topic**: Identify the primary theme or subject of the episode.
+#     2. **Key Discussions**: Summarize the main discussions, insights, or arguments shared.
+#     3. **Guest Speakers**: Highlight any guest speakers and their contributions or expertise.
+#     4. **Notable Quotes**: Mention any memorable quotes or moments from the episode.
+#     5. **Resources or References**: List any books, articles, or resources mentioned.
+#     6. **Tone and Style**: Describe the tone and style of the podcast (e.g., conversational, informative, humorous).
+#     7. **Key Takeaways**: Summarize the main lessons or calls to action for the audience.
+#     8. **Additional Insights**: Provide any other relevant observations or insights from the episode.
+
+#     **Instructions**:
+#     - Only include points that are explicitly mentioned in the transcript.
+#     - If a point is not mentioned, skip it entirely.
+#     - Do not make up or assume any information.
+
+#     **Transcript**:
+#     {text}
+
+#     **Summary**:
+#     """,
+
+#     "Interview": """You are given a transcript from an interview. Please provide a detailed and structured summary. Include only the points that are explicitly mentioned in the transcript. If a point is not mentioned, do not include it in the summary. The possible points to include are:
+#     1. **Background**: Provide context about the interviewee and interviewer.
+#     2. **Main Topics**: Summarize the primary topics or themes discussed.
+#     3. **Key Insights**: Highlight the most important insights, experiences, or stories shared.
+#     4. **Notable Quotes**: Mention any memorable quotes or moments from the interview.
+#     5. **Professional Achievements**: Discuss any notable achievements or projects mentioned by the interviewee.
+#     6. **Tone and Style**: Describe the tone and style of the interview (e.g., formal, casual, confrontational).
+#     7. **Future Plans**: Mention any future plans, goals, or advice shared by the interviewee.
+#     8. **Additional Insights**: Provide any other relevant observations or insights from the interview.
+
+#     **Instructions**:
+#     - Only include points that are explicitly mentioned in the transcript.
+#     - If a point is not mentioned, skip it entirely.
+#     - Do not make up or assume any information.
+
+#     **Transcript**:
+#     {text}
+
+#     **Summary**:
+#     """,
+
+#     "Audiobook": """You are given a transcript from an audiobook. Please provide a detailed and insightful summary. Include only the points that are explicitly mentioned in the transcript. If a point is not mentioned, do not include it in the summary. The possible points to include are:
+#     1. **Genre and Style**: Identify the genre and style of the book (e.g., fiction, non-fiction, self-help).
+#     2. **Main Plot or Concepts**: Summarize the main plot points or key concepts covered.
+#     3. **Characters or Figures**: Describe the main characters or important figures in the book.
+#     4. **Notable Quotes**: Highlight any significant quotes or passages and explain their meaning.
+#     5. **Themes and Messages**: Discuss the main themes, motifs, or underlying messages of the book.
+#     6. **Tone and Narration**: Describe the tone and narration style (e.g., dramatic, conversational).
+#     7. **Overall Impact**: Summarize the overall impact or message of the book.
+#     8. **Additional Insights**: Provide any other relevant observations or insights from the book.
+
+#     **Instructions**:
+#     - Only include points that are explicitly mentioned in the transcript.
+#     - If a point is not mentioned, skip it entirely.
+#     - Do not make up or assume any information.
+
+#     **Transcript**:
+#     {text}
+
+#     **Summary**:
+#     """,
+
+#     "Voice Memo": """You are given a transcript from a voice memo. Please provide a detailed and actionable summary. Include only the points that are explicitly mentioned in the transcript. If a point is not mentioned, do not include it in the summary. The possible points to include are:
+#     1. **Purpose**: Identify the main purpose or subject of the memo.
+#     2. **Key Points**: Summarize the main points, instructions, or reminders mentioned.
+#     3. **Time-Sensitive Information**: Highlight any deadlines or time-sensitive details.
+#     4. **Action Items**: List any follow-up tasks or action items.
+#     5. **Context**: Provide any relevant background or context for the memo.
+#     6. **Tone and Urgency**: Describe the tone and urgency of the memo (e.g., urgent, casual, formal).
+#     7. **Additional Details**: Mention any other important details or clarifications provided.
+#     8. **Additional Insights**: Provide any other relevant observations or insights from the memo.
+
+#     **Instructions**:
+#     - Only include points that are explicitly mentioned in the transcript.
+#     - If a point is not mentioned, skip it entirely.
+#     - Do not make up or assume any information.
+
+#     **Transcript**:
+#     {text}
+
+#     **Summary**:
+#     """,
+
+#     "Conference Talk": """You are given a transcript from a conference talk. Please provide a detailed and structured summary. Include only the points that are explicitly mentioned in the transcript. If a point is not mentioned, do not include it in the summary. The possible points to include are:
+#     1. **Main Topic**: Identify the primary topic and field of discussion.
+#     2. **Key Innovations or Findings**: Summarize the main innovations, findings, or ideas presented.
+#     3. **Methodologies**: Highlight any methodologies, approaches, or frameworks discussed.
+#     4. **Impact and Implications**: Discuss the potential impact and implications of the work.
+#     5. **Questions and Answers**: Summarize any questions from the audience and the speaker's responses.
+#     6. **Tone and Style**: Describe the tone and style of the presentation (e.g., technical, inspirational).
+#     7. **Key Takeaways**: List the main lessons or recommendations for the audience.
+#     8. **Additional Insights**: Provide any other relevant observations or insights from the talk.
+
+#     **Instructions**:
+#     - Only include points that are explicitly mentioned in the transcript.
+#     - If a point is not mentioned, skip it entirely.
+#     - Do not make up or assume any information.
+
+#     **Transcript**:
+#     {text}
+
+#     **Summary**:
+#     """
+# }
 def get_available_models() -> list[str]:
     """
     Retrieves a list of all available models from the Ollama server and extracts the model names.
@@ -177,6 +354,8 @@ def summarize_with_model(llm_model_name: str, context: str, text: str, audio_typ
 def preprocess_audio_file(audio_file_path: str) -> str:
     """
     Converts the input audio file to a WAV format with 16kHz sample rate and mono channel.
+    The input audio is converted into  WAV format (16kHz, mono) as whisper model works best with mono channel
+    Here we will be using ffmeg to 
 
     Args:
         audio_file_path (str): Path to the input audio file.
@@ -224,13 +403,13 @@ def translate_and_summarize(audio_file_path: str, context: str, whisper_model_na
     print("Audio preprocessed:", audio_file_wav)
 
     # Set the path to the Whisper binary
-    whisper_binary_path = r"D:\\MALAV\\America\\LLms\\AI-Powered-Meeting-Summarizer-main\\whisper.cpp\\build\\bin\\whisper-cli.exe"
+    whisper_binary_path = r"D:\\MALAV\\America\\LLms\\AI-Powered-Audio-Summarizer-main\\whisper.cpp\\build\\bin\\whisper-cli.exe"
     print("Whisper binary path:", whisper_binary_path)
 
     if not os.path.exists(whisper_binary_path):
         raise FileNotFoundError("Whisper binary not found.")
     
-    model_path = os.path.abspath(f"D:\\MALAV\\America\\LLms\\AI-Powered-Meeting-Summarizer-main\\whisper.cpp\\models\\ggml-{whisper_model_name}.bin")
+    model_path = os.path.abspath(f"D:\\MALAV\\America\\LLms\\AI-Powered-Audio-Summarizer-main\\whisper.cpp\\models\\ggml-{whisper_model_name}.bin")
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"Model file not found: {model_path}")
 
